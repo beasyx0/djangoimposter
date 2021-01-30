@@ -1,0 +1,85 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<div id="sidebar">
+    <div class="inner">
+
+        <!-- Search -->
+            <section id="search" class="alt">
+                <form method="get" action="{% url 'blog:search' %}">
+                    <input type="text" name="q" id="query" placeholder="Search" />
+                </form>
+            </section>
+
+        <!-- Menu -->
+            <nav id="menu">
+                <header class="major">
+                    <h2>Menu</h2>
+                </header>
+                <ul>
+                    <li><a href="{% url 'blog:home' %}">Homepage</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'users:detail' email=request.user.email %}">Bookmarks</a></li>
+                        <li><a href="{% url 'users:update' %}?next={{ request.get_full_path }}">Update Profile</a></li>
+                        <li><a href="{% url 'account_logout' %}?next={{ request.get_full_path }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'account_signup' %}?next={{ request.get_full_path }}">Signup</a></li>
+                        <li><a href="{% url 'account_login' %}?next={{ request.get_full_path }}">Login</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'blog:random-post' %}">Random Post</a></li>
+                </ul>
+            </nav> 
+
+            <!-- Section -->
+            <section id="newsletter">
+                <header class="major">
+                    <h2>Newsletter</h2>
+                </header>
+                <small>Get an email once a week with new content.</small>
+                <form method="post" id="newsletter-form">
+                    {% if query %} <!--this is to pass the query to the subscribe function to try to fix the redirect back to same ssearch with query-->
+                        <input type="hidden" id="q" name="searchTerm" value="{{ query }}">
+                    {% endif %}
+                    {% csrf_token %}
+                    {{ form_newsletter|crispy }}
+                    <button type="submit" class="button primary large sidebar-button">Signup</button><br>
+                    <label class="ohnohoney" for="tel"></label>
+                    <input class="ohnohoney" autocomplete="off" type="tel" id="tel" name="phone" placeholder="Your phone here">
+                    <span id="newsletter-success"><small><i class="fas fa-check"></i> Check your email to confirm</small></span>
+                    <span id="newsletter-error"><small><i class="fas fa-times"></i> Already subscribed</small></span>
+                </form>
+            </section>
+
+        <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>Featured</h2>
+                </header>
+                <div class="mini-posts">
+                    {% for post in featured %}
+                        <article>
+                            <a href="{{ post.get_absolute_url }}" class="image"><img src="{{ post.post_image.url }}" alt="" /></a>
+                            <p>{{ post.title }}</p>
+                        </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+        <!-- Section -->
+            <section id="get-in-touch">
+                <header class="major">
+                    <h2>Get in touch</h2>
+                </header>
+                <form method="post" action="{% url 'blog:contact' %}">
+                    {% csrf_token %}
+                    {{ form_contact|crispy }}
+                    <button type="submit" class="button primary large sidebar-button">Send</button>
+                </form>
+            </section>
+
+        <!-- Footer -->
+            <footer id="footer">
+                <p class="copyright">&copy; DjangoImposter. All rights reserved.</p>
+            </footer>
+
+    </div>
+</div>

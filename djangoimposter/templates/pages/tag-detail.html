@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block extra_head %}
+
+{% endblock extra_head %}
+
+{% block title %}Tag Detail{% endblock %}
+
+{% block content %}
+
+<!-- Section -->
+<section class="main-section">
+
+    <header class="major">
+        <h2>Posts with tag: "{{ tag }}"</h2>
+    </header>
+
+    <div class="posts">
+
+        {% for post in posts %}
+        
+            {% include "components/single-post.html" %}
+
+        {% endfor %}
+
+    </div>
+
+    {% if posts.has_other_pages %}
+        {% include "components/paginator.html" %}
+    {% endif %}
+
+    {% if posts.has_next is False  %}
+        <h1 class="reached-end">You've reached the end</h1>
+    {% endif %}
+
+</section>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+
+{% endblock extra_scripts %}
+

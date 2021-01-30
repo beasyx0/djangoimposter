@@ -1,0 +1,31 @@
+{% load static %}
+<!-- Banner -->
+<section id="banner">
+	<div class="content">
+		<header>
+			<h1>Guides for my future self,
+				as well as for you.</h1>
+			<p>A collection of coding tutorials</p>
+		</header>
+		<p>I've decided to document even the simplest of tasks for future reference. 
+			I open this up for the whole world to use. I once felt like an 
+			<a href="https://en.wikipedia.org/wiki/Impostor_syndrome">imposter</a> 
+			but have since overcame that. If I can do it you can too. I hope you find this site 
+			useful. Sign up for the newsletter to be notified of new articles once a week if 
+			there is anything new and you can create an account to bookmark posts. This site is
+			a work in progress, feel free to contact me from the bottom of the sidebar with any
+			suggestions, requests for mentoring or freelance work.
+		</p>
+		<ul class="actions">
+			{% if not user.is_authenticated %}
+				<li><a href="{% url 'account_login' %}" class="button big">Login</a></li>
+			{% else %}
+				<li><a href="{% url 'users:detail' email=request.user.email %}" class="button big">Bookmarks</a></li>
+			{% endif %}
+		</ul>
+	</div>
+	<span class="image object">
+		<img src="{% static "images/computer-in-the-dark.jpg" %}" alt="" />
+		<small>Image credit: Ales Nesetril <a href="https://unsplash.com/@alesnesetril">@alesnesetril</a> on unsplash</small>
+	</span>
+</section>

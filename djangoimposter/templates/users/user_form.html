@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block title %}{{ user.email }}{% endblock %}
+
+{% block content %}
+ 
+<!-- Section -->
+<section class="account-main-section">
+
+    <header class="major">
+        <h1>{% trans "User Update" %}</h1>
+    </header>
+
+    <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls" style="padding-top:40px;">
+        <button type="submit" class="button">Update</button>
+      </div>
+    </div>
+    </form>
+
+    <a style="margin-right:20px;" href="{% url 'account_change_password' %}">Change Password</a>
+
+</section>
+
+{% endblock %}

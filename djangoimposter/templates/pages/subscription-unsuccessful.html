@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block extra_head %}
+
+{% endblock extra_head %}
+
+{% block title %}{% trans "Subscription Successful" %}{% endblock %}
+
+{% block content %}
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								{% include "components/header.html" %}
+
+							<!-- Content -->
+								<section class="center-section">
+										
+									<h1>Something went wrong. Please check to make sure you entered your email correctly.</h1>
+
+									<a href="{% url 'blog:home' %}">Go Home</a>
+
+									<hr class="major" />
+
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					{% include "components/sidebar.html" %}
+				<!-- /sidebar -->
+
+			</div>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+
+{% endblock extra_scripts %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load blog_tags %}
+
+{% block extra_head %}
+
+{% endblock extra_head %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+	{% if posts.number == 1 %}
+
+		{% include "components/banner.html" %}
+
+		{% include "components/main-focus.html" %}
+
+	{% endif %}
+
+	<!-- Section -->
+	<section class="main-section">
+
+		<!--{% header %}-->
+		<header class="major">
+			<h2>Latest Posts</h2>
+		</header>
+
+		<div class="posts">
+
+			{% for post in posts %}
+			
+				{% include "components/single-post.html" %}
+				<!--{% single_post post %}-->
+
+			{% endfor %}
+
+		</div>
+
+		{% if posts.has_other_pages %}
+			{% include "components/paginator.html" %}
+		{% endif %}
+
+		{% if posts.has_next is False  %}
+			<h1 class="reached-end">You've reached the end</h1>
+		{% endif %}
+
+	</section>
+
+
+{% endblock content %}
+
+{% block extra_scripts %}
+
+{% endblock extra_scripts %}

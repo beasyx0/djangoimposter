@@ -1,0 +1,78 @@
+version: '3'
+
+volumes:
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+  production_traefik: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: djangoimposter_production_django
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: djangoimposter_production_postgres
+    restart: unless-stopped
+    volumes:
+      - production_postgres_data:/var/lib/postgresql/data:Z
+      - production_postgres_data_backups:/backups:z
+    env_file:
+      - ./.envs/.production/.postgres
+
+  traefik:
+    build:
+      context: .
+      dockerfile: ./compose/production/traefik/Dockerfile
+    image: djangoimposter_production_traefik
+    restart: unless-stopped
+    depends_on:
+      - django
+    volumes:
+      - production_traefik:/etc/traefik/acme:z
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      # - "0.0.0.0:5555:5555"
+
+  redis:
+    image: redis:5.0
+    restart: unless-stopped
+
+  celeryworker:
+    <<: *django
+    image: djangoimposter_production_celeryworker
+    restart: unless-stopped
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: djangoimposter_production_celerybeat
+    restart: unless-stopped
+    command: /start-celerybeat
+  
+  awscli:
+    build:
+      context: .
+      dockerfile: ./compose/production/aws/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./.envs/.production/.django
+    volumes:
+      - production_postgres_data_backups:/backups:z
+
+
+# added restart: unless-stopped to everything. Just a reminder in case something
+# goes wrong

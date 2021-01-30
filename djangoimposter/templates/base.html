@@ -1,0 +1,87 @@
+{% load static i18n %}<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{% block title %}djangoImposter{% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="My first blog">
+        <meta name="author" content="beasyx">
+        <link rel="canonical" href="{{ canonical_path }}" />
+        <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <![endif]-->
+
+        {% block css %}
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="{% static "css/main.css" %}" />
+            <link href="{% static "css/fontawesome-all.min.css" %}" rel="stylesheet">
+            <link href="{% static 'css/project.css' %}" rel="stylesheet">
+            <link href="{% static 'css/my-css.css' %}" rel="stylesheet">
+
+            <!-- Highlight JS -->
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css">
+
+        {% endblock css %}
+
+        {% block extra_head %}{% endblock extra_head %}
+    
+    </head>
+
+  <body>
+
+      {% if messages %}
+          {% for message in messages %}
+              <div class="my-messages {% if message.tags == 'success' %}my-messages-success{% endif %}{% if message.tags == 'info' %}my-messages-info{% endif %}{% if message.tags == 'error' %}my-messages-error{% endif %}">{{ message }}<a href="#" style="color:white;float:right;text-decoration:none;" class="close">X</a></div>
+          {% endfor %}
+      {% endif %}
+
+      <!-- Wrapper -->
+      <div id="wrapper">
+        <!-- Main -->
+        <div id="main">
+          <div class="inner">
+
+            {% include "components/header.html" %}
+
+            {% block content %}{% endblock content %}
+
+          </div>
+        </div>
+        <!-- Sidebar -->
+        {% include "components/sidebar.html" %}
+      </div>
+
+      <a href="#" class="scrollToTop"><i class="fas fa-arrow-up fa-lg"></i></a>
+
+      {% block modal %}{% endblock modal %}
+
+      {% block javascript %}
+          <script src="{% static "js/jquery.min.js" %}"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+          <script src="{% static "js/project.js" %}"></script>
+          <script src="{% static "js/browser.min.js" %}"></script>
+          <script src="{% static "js/breakpoints.min.js" %}"></script>
+          <script src="{% static "js/util.js" %}"></script>
+          <script src="{% static "js/main.js" %}"></script>
+
+          <!-- Highlight JS -->
+          <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/highlight.min.js"></script>
+          <script>hljs.initHighlightingOnLoad();</script>
+
+          <script src="{% static "js/my-js.js" %}"></script>
+
+          {% include "components/my-js.html" %}
+
+      {% endblock javascript %}
+
+      {% block extra_scripts %}{% endblock extra_scripts %}
+
+  </body>
+</html>
+ 

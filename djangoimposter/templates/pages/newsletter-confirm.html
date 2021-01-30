@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block extra_head %}
+
+{% endblock extra_head %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<section class="account-main-section">
+
+		<header class="major">
+			<h2>{{ title }}</h2>
+		</header>
+
+		<form method="post" action="{% url 'blog:newsletter-opt-in-out' slug=newsletter.slug %}">
+			<p class="mb-4">
+				By clicking confirm you are 
+				{% if opted_in %}opting out from recieving any more newsletter emails
+				{% else %}opting in to recieve a weekly newsletter email if there are any new posts
+				{% endif %}</p>
+			{% csrf_token %}
+			<button type="submit" class="button">Confirm</button>
+		</form>
+
+	</section>
+
+{% endblock content %}
+
+{% block extra_scripts %}{% endblock extra_scripts %}

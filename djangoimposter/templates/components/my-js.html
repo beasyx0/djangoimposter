@@ -1,0 +1,78 @@
+<script>
+  $(".close").click(function(){
+    $(".my-messages").hide();
+  });
+</script>
+
+<script>
+$(document).ready(function () {
+  $('.bookmark-button').click(function(){
+    $.ajax({
+      type: "POST",
+      url: "{% url 'blog:bookmarked' %}",
+      dataType: "json",
+      data: {'post_id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{csrf_token}}'},
+      success: function (response) {
+        icon = document.getElementsByName(response.post_id);
+        added = document.getElementsByName("added"+response.post_id);
+        removed = document.getElementsByName("removed"+response.post_id);
+        if(response.bookmarked==true){
+          $(icon).removeClass("not-bookmarked").addClass("bookmarked");
+          $(added).show().fadeOut(4000);
+        }
+        else if(response.bookmarked==false){
+          $(icon).removeClass("bookmarked").addClass("not-bookmarked");
+          $(removed).show().fadeOut(4000);
+        }
+      },
+      error: function (response) {
+        login = document.getElementsByName("login"+response["responseJSON"]["post_id"]);
+        $(login).show().fadeOut(4000);
+      }
+    });
+    return false;
+  });
+});
+</script>
+ 
+<script>
+  $(document).ready(function () {
+    $('#newsletter-form').submit(function () {
+      $.ajax({
+        data: $(this).serialize(),
+        type: 'POST',
+        url: "{% url 'blog:subscribed' %}",
+        success: function (response) {
+          if(response.data=='ohnohoney'){
+            alert('Success ;)')
+          }
+          else {
+            $('#newsletter-success').show().fadeOut(4000);
+            $("#newsletter-form").trigger("reset");
+          }
+        },
+        error: function (response) {
+          $('#newsletter-error').show().fadeOut(4000);
+          $("#newsletter-form").trigger("reset");
+        }
+      });
+      return false;
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function(){
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 200) {
+            $('.scrollToTop').fadeIn();
+        } else {
+            $('.scrollToTop').fadeOut();
+        }
+    });
+    $('.scrollToTop').click(function(){
+        $('html, body').animate({scrollTop : 0},400);
+        return false;
+    });
+});
+</script>
