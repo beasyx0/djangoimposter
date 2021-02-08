@@ -13,9 +13,9 @@ $(document).ready(function () {
       dataType: "json",
       data: {'post_id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{csrf_token}}'},
       success: function (response) {
-        icon = document.getElementsByName(response.post_id);
-        added = document.getElementsByName("added"+response.post_id);
-        removed = document.getElementsByName("removed"+response.post_id);
+        icon = $("#bookmarked-button-"+response.post_id);
+        added = $("#bookmarked-added-"+response.post_id);
+        removed = $("#bookmarked-removed-"+response.post_id);
         if(response.bookmarked==true){
           $(icon).removeClass("not-bookmarked").addClass("bookmarked");
           $(added).show().fadeOut(4000);
@@ -26,7 +26,7 @@ $(document).ready(function () {
         }
       },
       error: function (response) {
-        login = document.getElementsByName("login"+response["responseJSON"]["post_id"]);
+        login = $("#bookmarked-login-"+response["responseJSON"]["post_id"]);
         $(login).show().fadeOut(4000);
       }
     });

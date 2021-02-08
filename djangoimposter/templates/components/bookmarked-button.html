@@ -1,0 +1,4 @@
+<a class="bookmark-button {% if request.user in post.bookmarked.all %}bookmarked{% else %}not-bookmarked{% endif %}" name="{{ post.slug }}" id="bookmarked-button-{{ post.slug }}"><i class="fas fa-bookmark"></i></a>
+<span class="bookmark-added" id="bookmarked-added-{{post.slug}}"><i class="fas fa-check"></i> Added</span>
+<span class="bookmark-removed" id="bookmarked-removed-{{post.slug}}"><i class="fas fa-times"></i> Removed</span>
+<span class="bookmark-login" id="bookmarked-login-{{post.slug}}"><i class="fas fa-ban"></i> Login first</span>

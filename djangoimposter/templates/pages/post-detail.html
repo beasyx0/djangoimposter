@@ -21,24 +21,11 @@
 		<header class="main">
 			<h1>
 				{{ post.title }}
-				{% if request.user in post.bookmarked.all %}
-					<a class="bookmark-button bookmarked bm-detail" name="{{ post.slug }}"><i class="fas fa-bookmark"></i></a>
-				{% else %}
-					<a class="bookmark-button not-bookmarked bm-detail" name="{{ post.slug }}"><i class="fas fa-bookmark"></i></a>
-				{% endif %}
-				<span class="bookmark-added bookmark-added-detail" name="added{{post.slug}}"><i class="fas fa-check"></i> Added</span>
-				<span class="bookmark-removed bookmark-removed-detail" name="removed{{post.slug}}"><i class="fas fa-times"></i> Removed</span>
-				<span class="bookmark-login bookmark-login-detail"  name="login{{post.slug}}"><i class="fas fa-ban"></i> Login first</span>
+				<span class="h2">{% include "components/bookmarked-button.html" %}</span>
 			</h1>
 		</header>
 		<div class="mb-2">
-			<small>
-				by: {{ post.author }} | 
-				{{ post.modified|timesince }} ago | 
-				{% get_comment_count for post as comment_count %}{% if comment_count %}{{ comment_count }} comment{{ comment_count|pluralize }}{% else %}0 comments{% endif %} |
-				<i class="far fa-eye"></i> {% if post.viewcount %} {{ post.viewcount }} {% else %} {{ post.view_count }} {% endif %} | 
-				{{ post.get_estimated_reading_time }} min read
-			</small>
+			{% include 'components/post-info.html' %}
 		</div>
 		<article>
 			<a href="{{ post.get_absolute_url }}" class="image main"><img src="{{ post.post_image.url }}" alt="" /></a>
@@ -99,8 +86,8 @@
 <script
   type="text/javascript"
   src="{% url 'javascript-catalog' %}"></script>
-<script src="{% static 'django_comments_xtd/js/vendor~plugin-2.8.2.js' %}"></script>
-<script src="{% static 'django_comments_xtd/js/plugin-2.8.2.js' %}"></script>
+<script src="{% static 'django_comments_xtd/js/vendor~plugin-2.8.3.js' %}"></script>
+<script src="{% static 'django_comments_xtd/js/plugin-2.8.3.js' %}"></script>
 <script>
 $(function() {
   $('[data-toggle="tooltip"]').tooltip({html: true});
