@@ -277,3 +277,4 @@ djangoimposter/media/post_pics
 .env
 .envs/*
 !.envs/.local/
+!.envs/.production/
